@@ -180,18 +180,25 @@
     <h2 class="section-title pf">Solicite seu orçamento</h2>
     <div class="contact-grid">
       <div class="contact-info">
-        <p style="font-size:1rem;color:var(--text-muted);line-height:1.7;margin-bottom:0.5rem">Conte-nos sobre seu projeto e entraremos em contato em até 24 horas com uma proposta personalizada.</p>
-        <div class="contact-item">
+        <div class="contact-highlight">
+          <span class="highlight-kicker">Atendimento direto</span>
+          <p>Conte-nos sobre seu projeto e fale com a Marcenaria Magalhães pelo canal que preferir. Respondemos com atenção para transformar sua ideia em uma proposta sob medida.</p>
+        </div>
+        <a class="contact-item contact-link" href="https://www.instagram.com/marcenaria_magalhaes_/" target="_blank" rel="noopener" aria-label="Abrir Instagram da Marcenaria Magalhães">
           <div class="ci-icon">
             <img src="imagens/insta.png" alt="Ícone do Instagram">
           </div>
-          <div><div class="ci-title">Instagram</div><div class="ci-value">Rua das Acácias, 482 — Santana, São Paulo</div></div>
-        </div>
-        <div class="contact-item">
+          <div><div class="ci-title">Instagram</div><div class="ci-value">@marcenaria_magalhaes_</div></div>
+        </a>
+        <a class="contact-item contact-link" href="https://wa.me/5511987654321" target="_blank" rel="noopener" aria-label="Chamar Marcenaria Magalhães no WhatsApp">
           <div class="ci-icon">
             <img src="imagens/tell.png" alt="Ícone de telefone e WhatsApp">
           </div>
           <div><div class="ci-title">Telefone / WhatsApp</div><div class="ci-value">(11) 98765-4321</div></div>
+        </a>
+        <div class="contact-perks" aria-label="Diferenciais do atendimento">
+          <div><strong>24h</strong><span>Retorno rápido</span></div>
+          <div><strong>100%</strong><span>Sob medida</span></div>
         </div>
       </div>
       <div class="contact-form">
@@ -258,10 +265,26 @@
   function closeMobile(){document.getElementById('mobileMenu').classList.remove('open')}
   function handleSubmit(e){
     e.preventDefault();
-    const btn=e.target.querySelector('.form-submit');
-    btn.textContent='Mensagem enviada!';
+    const form=e.target;
+    const data=new FormData(form);
+    const nome=(data.get('nome') || '').trim();
+    const telefone=(data.get('telefone') || '').trim();
+    const tipo=(data.get('tipo') || '').trim();
+    const mensagem=(data.get('mensagem') || '').trim();
+    const texto=[
+      'Olá, Marcenaria Magalhães! Gostaria de solicitar um orçamento.',
+      '',
+      `Nome: ${nome || 'Não informado'}`,
+      `Telefone: ${telefone || 'Não informado'}`,
+      `Tipo de projeto: ${tipo || 'Não informado'}`,
+      `Descrição: ${mensagem || 'Não informada'}`
+    ].join('\n');
+    const whatsappUrl=`https://wa.me/5511987654321?text=${encodeURIComponent(texto)}`;
+    window.open(whatsappUrl,'_blank','noopener');
+    const btn=form.querySelector('.form-submit');
+    btn.textContent='Abrindo WhatsApp...';
     btn.style.background='#3B6B2A';
-    setTimeout(()=>{btn.textContent='Enviar mensagem';btn.style.background='';e.target.reset()},3000);
+    setTimeout(()=>{btn.textContent='Enviar mensagem';btn.style.background=''},2500);
   }
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',e=>{
